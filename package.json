@@ -14,7 +14,7 @@
     "@gridsome/transformer-remark": "^0.6.4",
     "@gridsome/transformer-yaml": "^0.2.1",
     "@gridsome/vue-remark": "^0.2.6",
-    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@tailwindcss/postcss7-compat": "^2.0.3",
     "autoprefixer": "^9.8.6",
     "docsearch.js": "^2.6.3",
     "gridsome": "^0.7.23",
