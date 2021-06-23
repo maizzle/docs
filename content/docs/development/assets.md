@@ -30,7 +30,7 @@ module.exports = {
 }
 ```
 
-Everything inside `assets.source` will be copied to the `assets.destination` directory, which is relative to [`templates.destination.path`](http://localhost:8080/docs/build-config/#path).
+Everything inside `assets.source` will be copied to the `assets.destination` directory, which is relative to [`templates.destination.path`](https://maizzle.com/docs/build-config/#path).
 
 ## Multiple paths
 
