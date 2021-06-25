@@ -2,7 +2,7 @@
   items:
     - title: What is Maizzle?
       path: /docs/introduction/
-    - title: Installation
+    - title: Getting Started
       path: /docs/installation/
     - title: Templates
       path: /templates/
