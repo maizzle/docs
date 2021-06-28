@@ -39,12 +39,12 @@ module.exports = {
         extension: 'html',
       },
       assets: {
-        source: './src/assets/images',
+        source: 'src/images',
         destination: 'images',
       },
     },
     tailwind: {
-      css: './src/assets/css/main.css',
+      css: 'src/css/tailwind.css',
       config: 'tailwind.config.js',
     },
     posthtml: {
@@ -259,7 +259,7 @@ build: {
       extension: 'html'
     },
     assets: {
-      source: './src/assets/images',
+      source: './src/images',
       destination: 'images'
     }
   }
@@ -405,7 +405,7 @@ At build time, `templates.assets.destination` will be created relative to `templ
 build: {
   templates: {
     assets: {
-      source: 'src/assets/images',
+      source: 'src/images',
       destination: 'images'
     }
   }
@@ -425,7 +425,7 @@ build: {
         path: 'build_basic'
       },
       assets: {
-        source: 'src/assets/images',
+        source: 'src/images',
         destination: 'images' // assets output to build_basic/images
       }
     },
@@ -450,7 +450,7 @@ Paths for Tailwind CSS.
 ```js
 build : {
   tailwind: {
-    css: 'src/assets/css/main.css',
+    css: 'src/css/tailwind.css',
     config: 'tailwind.config.js'
   }
 }

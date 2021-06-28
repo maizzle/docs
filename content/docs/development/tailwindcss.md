@@ -89,82 +89,69 @@ And that brings us to...
 
 ## CSS Files
 
-The [official Maizzle Starter](https://github.com/maizzle/maizzle) uses a `main.css` file stored in `src/assets/css`.
+The [official Maizzle Starter](https://github.com/maizzle/maizzle) uses a `tailwind.css` file stored in `src/css`.
 
 Although optional, this is included in order to provide an example of how you can use custom CSS components that go beyond the utility-first concept of Tailwind. 
 
 For example, it's common practice with HTML emails to use... [creative CSS selectors](https://howtotarget.email/) to get things working in a certain email client; stuff Tailwind can't do out of the box.
 
-This `main.css` file does two things:
+`tailwind.css` does two things:
 
 1. it imports Tailwind CSS components and utilities
 2. it imports custom CSS files
 
 
-`config.js` then contains a reference to this file, which tells Tailwind to load it and compile the CSS based on it:
+`config.js` then contains a reference to this file, which tells Tailwind to load it and compile the CSS based on its contents:
 
 ```js
 // config.js
 module.exports = {
   build: {
     tailwind: {
-      css: 'src/assets/css/main.css',
+      css: 'src/css/tailwind.css',
     }
   }
 }
 ```
 
-As mentioned, this is totally optional: you can use Tailwind CSS in Maizzle without creating any CSS file at all! In this case, Tailwind will only generate components and utilities, based on your `tailwind.config.js`.
+Again, this is totally optional: you can use Tailwind CSS in Maizzle without creating any CSS file at all! In this case, Tailwind will only generate components and utilities, based on your `tailwind.config.js`.
 
 ### Custom CSS
 
-Add custom CSS files anywhere under `src/assets/css`.
+Add custom CSS files anywhere under `src/css`.
 
-Maizzle adds the following ones in `src/assets/css/custom` :
+Maizzle adds the following ones:
 
-- `reset.css` - browser and email client CSS resets.
+- `resets.css` - browser and email client CSS resets.
 
 - `utilities.css` - custom utility classes that Tailwind CSS doesn't provide.
 
-<alert type="warning">Files that you <code>@import</code> in <code>main.css</code> must be relative to <code>src/assets/css</code></alert>
+<alert type="warning">Files that you <code>@import</code> in <code>tailwind.css</code> must be relative to <code>src/css</code></alert>
 
 ## Just-in-Time
 
-Maizzle supports Tailwind's [Just-in-Time Mode](https://tailwindcss.com/docs/just-in-time-mode).
-
-Enable it in your `tailwind.config.js`:
+Maizzle enables Tailwind's [Just-in-Time Mode](https://tailwindcss.com/docs/just-in-time-mode) by default:
 
 ```js
+// tailwind.config.js
 module.exports = {
   mode: 'jit',
-  purge: [
-    'src/**/*.*',
-  ],
 }
 ```
 
-When enabling JIT, it's currently required that you also specify the purge paths, and they _must be_ in simplified array syntax like above - using an object will not work:
+Not only does JIT greatly improve build speeds, but it also enables a lot of useful new features, such as [stackable variants](https://tailwindcss.com/docs/just-in-time-mode#stackable-variants) or [arbitrary value support](https://tailwindcss.com/docs/just-in-time-mode#arbitrary-value-support).
 
-```diff
-+  purge: [
-+    'src/**/*.*',
-+  ],
--  purge: {
--    content: [
--      'src/**/*.*',
--    ]
--  },
-```
+All variants are enabled, so that's one less thing you need to worry about.
 
-### JIT in production
+There are some [limitations](https://tailwindcss.com/docs/just-in-time-mode#limitations), but most of the time you won't run into them. 
 
-JIT is awesome, but it's currently still in its early stages. Things like disabling text or background opacity don't work properly, and there might be other edge cases.
+Probably the biggest downside is that you no longer have all of the generated Tailwind classes available in your browser's Devtools, to quickly test out/debug styling right in the browser.
 
-When building your emails for production, it's best that you disable JIT.
+### Disabling JIT
 
-Here are two ways of doing that:
+You can disable JIT for production builds if you need to.
 
-###### Customize JIT in your Tailwind config
+###### Define the mode in your Tailwind config
 
 You can toggle JIT based on the current `NODE_ENV` in your `tailwind.config.js`:
 
@@ -179,7 +166,7 @@ module.exports = {
 
 That will enable JIT only when developing locally with `maizzle serve`, or when you run `maizzle build` without specifying an environment name.
 
-`maizzle build [env]` commands will use Always-on-Time (AOT) mode, which is the classic mode that outputs all classes based on your Tailwind config.
+`maizzle build [env]` commands will use Always-on-Time (AOT) mode, which is the classic, slower mode that outputs all classes based on your Tailwind config.
 
 ###### Disable JIT in Maizzle config
 
@@ -211,16 +198,14 @@ Here's how Maizzle configures Tailwind CSS purging internally:
 
 ```js
 purge: {
-  enabled: maizzleConfig.env !== 'local',
   content: [
     'src/**/*.*',
     {raw: html}
   ],
-  options: get(maizzleConfig, 'purgeCSS', {})
 },
 ```
 
-So CSS purging is enabled _unless_ you run one of these commands:
+Basically, CSS purging is disabled if you run one of these commands:
 
 - `maizzle serve`
 - `maizzle build`
@@ -229,9 +214,33 @@ So CSS purging is enabled _unless_ you run one of these commands:
 All files inside your project's `src` folder are scanned for CSS selectors to be preserved; 
 `{raw: html}` is only used when [compiling templates programmatically](/docs/nodejs/).
 
+### Tailwind CSS purging
+
+You can define custom CSS purging options right in your Tailwind config file:
+
+```js
+// tailwind.config.js
+module.exports = {
+  mode: 'jit',
+  purge: {
+    content: [
+      'src/**/*.*',
+      'custom/path/**/*.html',
+    ],
+    safelist: [
+      'bg-blue-500',
+      'text-center',
+      'hover:opacity-100',
+      // ...
+      'lg:text-right',
+    ]
+  },
+}
+```
+
 ### Configuring PurgeCSS
 
-Tailwind uses [PurgeCSS](https://purgecss.com/) to purge unused CSS - you can configure PurgeCSS in Maizzle by adding the `purgeCSS` key to your `config.js`:
+Tailwind uses [PurgeCSS](https://purgecss.com/) to purge unused CSS - you can also configure purging by adding the `purgeCSS` key to your `config.js`:
 
 ```js
 // config.js
@@ -247,7 +256,7 @@ module.exports = {
 
 The settings you define here will be merged on top of the internal ones, so you can use it to do things like safelisting class names or defining additional purge paths.
 
-<alert type="warning">Tailwind CSS JIT currently doesn't support configuring PurgeCSS options.</alert>
+<alert type="warning">The <code>safelist</code> option does not support regular expressions when JIT is used.</alert>
 
 ## Shorthand CSS
 
@@ -270,14 +279,25 @@ Consider this template:
 Let's use `@apply` to compose a `col` class by  extracting two padding utilities: 
 
 ```css
-/* src/assets/css/custom/components.css */
+/* src/css/components.css */
 
 .col {
   @apply py-8 px-4;
 }
 ```
 
-When building with inlining enabled, normally that would yield:
+Remember to import that file in `src/tailwind.css`:
+
+```css
+/**
+ * @import here any custom CSS components - that is, classes that
+ * you'd want loaded before the Tailwind utilities, so the
+ * utilities can still override them.
+*/
+@import "components.css";
+```
+
+When building with CSS inlining enabled, normally that would yield:
 
 ```html
 <div style="padding-top: 8px; padding-bottom: 8px; padding-left: 4px; padding-right: 4px;">test</div>
@@ -358,6 +378,7 @@ Next, use that block in a Template:
       a {
         @apply text-blue-500;
       }
+
       @screen sm {
         table { 
           @apply w-full;

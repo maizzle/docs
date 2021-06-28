@@ -41,29 +41,16 @@ Add a `purgeCSS` key to your config, to customize PurgeCSS settings:
 ```js
 module.exports = {
   purgeCSS: {
-    defaultExtractor: content => {
-      // return a custom extractor
-    },
     content: [], // array of filenames or globs to scan for selectors
     safelist: [], // array of strings or custom object
     blocklist: [], // array of strings
+    keyframes: true,
+    fontFace: true,
   }
 }
 ```
 
-### defaultExtractor
-
-If your CSS class names include characters not covered by [Tailwind's default extractor](https://github.com/tailwindlabs/tailwindcss/blob/master/src/lib/purgeUnusedStyles.js#L25-L34), use this option to specify a custom one:
-
-```js
-module.exports = {
-  purgeCSS: {
-    defaultExtractor: content => [...myCustomExtractor(content)]
-  }
-}
-```
-
-<alert type="warning">Characters like <code>$</code> need to be escaped in CSS. This isn't well supported in email clients. When using class names with characters other than <code>:</code>, <code>/</code>, <code>./</code> and <code>%</code>, Maizzle will <a href="#safeclassnames">replace</a> some of them with safer alternatives.</alert>
+A list of available options can be found in the [PurgeCSS documentation](https://purgecss.com/configuration.html#options).
 
 ### content
 
@@ -103,7 +90,7 @@ safelist: {
 }
 ```
 
-See the [PurgeCSS docs](https://purgecss.com/configuration.html#options) for an explanation of all options.
+<alert type="warning">The <code>safelist</code> option does not support regular expressions when JIT is used.</alert>
 
 ### blocklist
 
@@ -119,8 +106,6 @@ module.exports = {
 ```
 
 In the example above, even if you use `.wrapper` or `.nav-links` anywhere in your templates, they will be removed from the compiled CSS.
-
-<alert>Learn more about all these options, in the <a href="https://purgecss.com/configuration.html#options" target="_blank" rel="noopener">PurgeCSS docs &nearr;</a></alert>
 
 ## removeUnusedCSS
 
