@@ -19,7 +19,8 @@ Because of poor email client support, `rem` units have been replaced with `px`.
 
 This affects the following utilities:
 
-- `spacing` (max/min width and height, width, height, margin, padding, etc)
+- `spacing` (width, height, margin, padding, etc)
+- `maxWidth`
 - `borderRadius`
 - `fontSize`
 - `lineHeight`
@@ -97,6 +98,32 @@ module.exports = {
 }
 ```
 
+### maxWidth
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      maxWidth: theme => ({
+        ...theme('spacing'),
+        xs: '160px',
+        sm: '192px',
+        md: '224px',
+        lg: '256px',
+        xl: '288px',
+        '2xl': '336px',
+        '3xl': '384px',
+        '4xl': '448px',
+        '5xl': '512px',
+        '6xl': '576px',
+        '7xl': '640px',
+      }),
+    }
+  }
+}
+```
+
 ### borderRadius
 
 ```js
@@ -105,9 +132,15 @@ module.exports = {
   theme: {
     extend: {
       borderRadius: {
+        none: '0px',
         sm: '2px',
         DEFAULT: '4px',
+        md: '6px',
         lg: '8px',
+        xl: '12px',
+        '2xl': '16px',
+        '3xl': '24px',
+        full: '9999px',
       },
     }
   }
