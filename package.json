@@ -19,7 +19,7 @@
     "docsearch.js": "^2.6.3",
     "gridsome": "^0.7.23",
     "gridsome-plugin-remark-shiki": "^0.6.0",
-    "postcss": "^7.0.35",
+    "postcss": "^8.3.5",
     "scroll-to-element": "^2.0.3",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   },
