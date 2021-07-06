@@ -305,7 +305,7 @@ Maizzle will only look for files with these extensions when searching your `buil
 
 This means you can keep other files alongside your Templates, and Maizzle will not try to compile them - it will simply copy them over to the build destination directory.
 
-<alert>If <code>build.templates.filetypes</code> is missing, Maizzle will default to <code>html</code>.</alert>
+<alert>If <code>build.templates.filetypes</code> is not defined, Maizzle will default to <code>html</code>.</alert>
 
 #### source
 
