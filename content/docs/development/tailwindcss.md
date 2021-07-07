@@ -100,15 +100,16 @@ For example, it's common practice with HTML emails to use... [creative CSS selec
 1. it imports Tailwind CSS components and utilities
 2. it imports custom CSS files
 
+Maizzle will automatically use this file if it finds it.
 
-`config.js` then contains a reference to this file, which tells Tailwind to load it and compile the CSS based on its contents:
+If using a custom file, you need to define its path in `config.js`:
 
 ```js
 // config.js
 module.exports = {
   build: {
     tailwind: {
-      css: 'src/css/tailwind.css',
+      css: 'src/css/custom/tw-custom.css',
     }
   }
 }
