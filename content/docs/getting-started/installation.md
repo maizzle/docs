@@ -1,5 +1,5 @@
 ---
-title: "Installation"
+title: "Getting Started"
 slug: "installation"
 description: "Installing the Maizzle Email Framework on your machine and creating a new project"
 ---
@@ -7,7 +7,7 @@ description: "Installing the Maizzle Email Framework on your machine and creatin
 import Alert from '~/components/Alert.vue'
 import MaizzleVersion from '~/components/LatestReleaseNumber.vue'
 
-# Installing Maizzle
+# Getting Started
 
 ## Requirements
 
@@ -79,19 +79,29 @@ Congratulations, you can now start using Maizzle!
 
 ## Development
 
+Maizzle includes different commands for developing locally on your machine and building production-ready emails.
+
+### Local
+
 Start local email development by running the [`serve`](/docs/commands/#serve) command:
 
 ```bash
 maizzle serve
 ```
 
-Ready for production?
+This will start a local server that you can access at `http://localhost:3000` - when you make a change to a template and save it, the browser will refresh to reflect that.
+
+### Production
+
+Build production-ready emails, with inlined CSS and many other optimizations, by running the following command:
 
 ```bash
 maizzle build production
 ```
 
-Check out the [Commands](/docs/commands/) for more info.
+This will use settings in your `config.production.js` to compile email templates that you can send via your <abbr title="Email Service Provider">ESP</abbr>.
+
+Check out the [Commands docs](/docs/commands/) for more details.
 
 ## Updating
 
