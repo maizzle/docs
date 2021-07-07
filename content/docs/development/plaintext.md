@@ -20,23 +20,60 @@ module.exports = {
 }
 ```
 
-## Configuration
+## Custom path
 
-You may configure the `path` and `extension` of the plaintext file:
+You may configure the `path` and `extension` of the plaintext files:
 
 ```js
 module.exports = {
   plaintext: {
     destination: {
-      path: 'dist/brand/template.txt',
-      extension: 'rxt'
+      path: 'dist/brand/plaintext',
+      extension: 'rtxt'
     }
   }
 }
 ```
 
-<alert>The <code>path</code> value must include the file name and extension.</alert>
-<alert>When using the <code>path</code> option, the <code>extension</code> option will be discarded.</alert>
+<alert>The <code>path</code> option must be a directory path, otherwise a single plaintext file will be generated for all of your emails.</alert>
+
+Using multiple Template sources? You can enable plaintext on a per-source basis:
+
+```js
+module.exports = {
+  build: {
+    templates: [
+      {
+        source: 'src/templates',
+        destination: {
+          path: 'build-1',
+        },
+        plaintext: true // build-1 folder only: output plaintext files next to the HTML counterparts
+      },
+      {
+        source: 'src/templates',
+        destination: {
+          path: 'build-2',
+        },
+        // build-2 folder only: output plaintext files in the `plaintext` subdirectory, with custom extension
+        plaintext: {
+          destination: {
+            path: 'build-2/plaintext',
+            extension: 'rtxt'
+          }
+        },
+      },
+      // plaintext won't be generated in the `build-3` directory, because we didn't enable it
+      {
+        source: 'src/templates',
+        destination: {
+          path: 'build-3',
+        }
+      },
+    ]
+  }
+}
+```
 
 ## Front Matter
 
