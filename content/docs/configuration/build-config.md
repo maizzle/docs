@@ -458,9 +458,13 @@ build : {
 
 ### css
 
+Default: `src/css/tailwind.css`
+
 Path to your [main CSS file](/docs/tailwindcss/#maincss), that will be compiled with Tailwind CSS.
 
 ### config
+
+Default: `tailwind.config.js`
 
 Path to the Tailwind CSS config file to use.
 
